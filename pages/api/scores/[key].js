@@ -3,8 +3,8 @@ const yup = require('yup');
 export default async (req, res) => {
   console.log(req.method)
   switch (req.method) {
-    case "POST":
-        await handlePOST(req, res)
+    case "PUT":
+        await handlePUT(req, res)
       break;
     case "GET":
         await handleGET(req, res)
@@ -21,10 +21,10 @@ const handleGET = async (req, res) => {
     return res.status(scoreResponse.status).json({error: "Ha habido un error inesperado"});
 
   // ***** ALL OK *****
-  return res.json(storeBody);
+  return res.json(storeBody[req.query.key]);
 }
 
-const handlePOST = async (req, res) => {
+const handlePUT = async (req, res) => {
   // ***** VALIDATE DATA *****
   const schema = yup.object().shape({
     name: yup.string().required('Debe agregar un nombre'),
@@ -53,17 +53,17 @@ const handlePOST = async (req, res) => {
 
   const scoreBody = await scoreResponse.json();
   if(!scoreResponse.ok || scoreBody.has_error)
-    return res.status(scoreBody.has_error? 400 : scoreResponse.status).json({error: "No se ha podido obtener procesar su pedido"})
+    return res.status(scoreBody.has_error ? 400 : scoreResponse.status).json({error: "No se ha podido obtener procesar su pedido"})
 
   // ***** STORE *****
   const storeResponse = await fetch(`${process.env.STORE_API}`, {
-    method: 'POST',
-    body: JSON.stringify({...data, status: scoreBody.status})
+    method: 'PATCH',
+    body: JSON.stringify({[req.query.key]:{...data, status: scoreBody.status}})
   });
   const storeBody = await storeResponse.json();
   if(!storeResponse.ok)
     return res.status(scoreResponse.status).json({error: "Ha habido un error inesperado"});
 
   // ***** ALL OK *****
-  return res.json({status: scoreBody.status});
+  return res.status(200).end();
 }
