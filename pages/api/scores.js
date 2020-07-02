@@ -14,7 +14,7 @@ export default async (req, res) => {
   }
 }
 const handleGET = async (req, res) => {
-  const storeResponse = await fetch(`${process.env.STORE_API}`);
+  const storeResponse = await fetch(`${process.env.STORE_API}.json`);
   const storeBody = await storeResponse.json();
   if(!storeResponse.ok)
     return res.status(scoreResponse.status).json({error: "Ha habido un error inesperado"});
@@ -52,10 +52,10 @@ const handlePOST = async (req, res) => {
 
   const scoreBody = await scoreResponse.json();
   if(!scoreResponse.ok || scoreBody.has_error)
-    return res.status(scoreBody.has_error? 400 : scoreResponse.status).json({error: "No se ha podido obtener procesar su pedido"})
+    return res.status(scoreBody.has_error? 400 : scoreResponse.status).json({error: "No se ha podido procesar su pedido"})
 
   // ***** STORE *****
-  const storeResponse = await fetch(`${process.env.STORE_API}`, {
+  const storeResponse = await fetch(`${process.env.STORE_API}.json`, {
     method: 'POST',
     body: JSON.stringify({...data, status: scoreBody.status})
   });

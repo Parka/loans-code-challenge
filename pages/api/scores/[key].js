@@ -14,13 +14,13 @@ export default async (req, res) => {
   }
 }
 const handleGET = async (req, res) => {
-  const storeResponse = await fetch(`${process.env.STORE_API}`);
-  const storeBody = await storeResponse.json();
-  if(!storeResponse.ok)
-    return res.status(scoreResponse.status).json({error: "Ha habido un error inesperado"});
+  const response = await fetch(`${process.env.STORE_API}/${req.query.key}.json`);
+  const body = await response.json();
+  if(!response.ok)
+    return res.status(response.status).json({error: "Ha habido un error inesperado"});
 
   // ***** ALL OK *****
-  return res.json(storeBody[req.query.key]);
+  return res.json(body);
 }
 
 const handlePUT = async (req, res) => {
@@ -55,9 +55,9 @@ const handlePUT = async (req, res) => {
     return res.status(scoreBody.has_error ? 400 : scoreResponse.status).json({error: "No se ha podido obtener procesar su pedido"})
 
   // ***** STORE *****
-  const storeResponse = await fetch(`${process.env.STORE_API}`, {
-    method: 'PATCH',
-    body: JSON.stringify({[req.query.key]:{...data, status: scoreBody.status}})
+  const storeResponse = await fetch(`${process.env.STORE_API}/${req.query.key}.json`, {
+    method: 'PUT',
+    body: JSON.stringify({...data, status: scoreBody.status})
   });
   const storeBody = await storeResponse.json();
   if(!storeResponse.ok)
