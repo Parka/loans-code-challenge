@@ -4,13 +4,12 @@ import Error from 'next/error'
 import LoanForm from 'components/loan-form';
 import { useRouter } from 'next/router'
 
-
-
 const Edit = () => {
   const router = useRouter();
   const { key } = router.query;
 
   const [loanQuery, setLoanQuery] = useState();
+  const [loanResult, setLoanResult] = useState();
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -27,7 +26,13 @@ const Edit = () => {
   if(error){return (<Error statusCode={404}/>);}
 
   const onSubmit = async values => {
-    return fetch(`api/scores/${key}`, { method: 'PUT', body: JSON.stringify(values) })
+    const response = await fetch(`api/scores/${key}`, { method: 'PUT', body: JSON.stringify(values) });
+    if(response.ok) {
+      const result = await response.json();
+      setLoanResult(result.status);
+    }else{
+      console.log("Something went wrong...")
+    }
   }
 
   return (
@@ -36,7 +41,15 @@ const Edit = () => {
         <title>Pedir un prestamo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {loanQuery && <LoanForm initialValues={loanQuery} onSubmit={onSubmit} />}
+      {loanQuery && !loanResult &&
+      <>
+        <h1>Editar pedido</h1>
+        <LoanForm initialValues={loanQuery} onSubmit={onSubmit} buttonCaption="Modificar pedido"/>
+      </>
+      }
+      {loanResult &&
+        <h1>{loanResult==='accepted'?'¡Su pedido fué aceptado!':'Su pedido ha sido rechazado'}</h1>
+      }
     </div>
   )
 }
