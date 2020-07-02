@@ -8,6 +8,9 @@ export default async (req, res) => {
     case "GET":
         await handleGET(req, res)
       break;
+    case "DELETE":
+        await handleDELETE(req, res)
+      break;
     default:
       res.status(404).end();
       break;
@@ -15,6 +18,16 @@ export default async (req, res) => {
 }
 const handleGET = async (req, res) => {
   const response = await fetch(`${process.env.STORE_API}/${req.query.key}.json`);
+  const body = await response.json();
+  if(!response.ok)
+    return res.status(response.status).json({error: "Ha habido un error inesperado"});
+
+  // ***** ALL OK *****
+  return res.json(body);
+}
+
+const handleDELETE = async (req, res) => {
+  const response = await fetch(`${process.env.STORE_API}/${req.query.key}.json`, {method:'DELETE'});
   const body = await response.json();
   if(!response.ok)
     return res.status(response.status).json({error: "Ha habido un error inesperado"});
