@@ -1,0 +1,45 @@
+@use 'sizes.scss' as *;
+@use 'colors.scss' as *;
+
+.form {
+  color: $text-primary;
+  input, select, option {
+    color: $text-secondary
+  }
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  & + * {
+    margin-top: $margin
+  }
+  &>*:first-child {
+    margin-right: 40px;
+  }
+}
+
+.field {
+  min-width: 150px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.error {
+  padding: 0px;
+  margin: 0px;
+  font-size: $fontXS;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  color: $red;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+}
