@@ -1,7 +1,6 @@
 const yup = require('yup');
 
 export default async (req, res) => {
-  console.log(req.method)
   switch (req.method) {
     case "PUT":
         await handlePUT(req, res)
