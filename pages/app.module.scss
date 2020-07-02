@@ -1,0 +1,16 @@
+@use "colors.scss" as *;
+@use "sizes.scss" as *;
+
+.main {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.panel{
+  background-color: $white;
+  padding: $padding-big;
+  border-radius: $radius;
+}
