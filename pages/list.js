@@ -54,7 +54,7 @@ const List = () => {
   return (
     <div className="container">
       <Head>
-        <title>Ver pedidos de prestamo</title>
+        <title>Ver pedidos de préstamo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.main}>

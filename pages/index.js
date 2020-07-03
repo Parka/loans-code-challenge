@@ -25,10 +25,10 @@ export default function Home() {
   return (
     <div className="container">
       <Head>
-        <title>Pedir un prestamo</title>
+        <title>Pedir un préstamo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>Pedir prestamo</h1>
+      <h1>Pedir préstamo</h1>
       {loanResult
         ?
         <h1>{loanResult==='accepted'?'¡Su pedido fué aceptado!':'Su pedido ha sido rechazado'}</h1>

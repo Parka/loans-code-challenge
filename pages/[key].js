@@ -38,7 +38,7 @@ const Edit = () => {
   return (
     <div className="container">
       <Head>
-        <title>Pedir un prestamo</title>
+        <title>Pedir un préstamo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {loanQuery && !loanResult &&

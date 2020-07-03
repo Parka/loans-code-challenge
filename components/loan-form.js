@@ -64,7 +64,7 @@ const LoanForm = ({initialValues, onSubmit, buttonCaption}) => (
         </FieldStyled>
       </Row>
       <div className={styles.button}>
-        <button type="submit">{buttonCaption || 'Pedir prestamo'}</button>
+        <button type="submit">{buttonCaption || 'Pedir préstamo'}</button>
       </div>
     </Form>
   </Formik>
